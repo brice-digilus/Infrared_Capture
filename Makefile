@@ -53,17 +53,10 @@ examples/Servo_360_DXL.o: CXXFLAGS+=-std=c++11 -O2 -O3 -DLINUX -D_GNU_SOURCE -Wa
 
 lib/sensor_lib.o : CC=$(CXX) -std=c++11 -I headers -I lib
 
-change_addr Th_tiff_timed Servo_360 Servo_360_DXL : CXXFLAGS+=-I. -std=c++11
+change_addr Servo_360_DXL : CXXFLAGS+=-I. -std=c++11
 
 lib/nano_tiff_lib.o : CC=$(CXX) -std=c++11
 
-
-
-Th_tiff_timed: examples/Th_tiff_timed.o lib/nano_tiff_lib.o lib/sensor_lib.o libMLX90640_API.a
-	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ 
-
-Servo_360: examples/Servo_360.o lib/nano_tiff_lib.o lib/sensor_lib.o libMLX90640_API.a
-	$(CXX)  $^ -o $@ 
 
 Servo_360_DXL: examples/Servo_360_DXL.o lib/nano_tiff_lib.o lib/sensor_lib.o libMLX90640_API.a
 	$(CXX)  $^ -o $@  $(DXL_LIBRARIES)
@@ -73,9 +66,8 @@ change_addr: examples/change_addr.o libMLX90640_API.a
 
 
 clean:
-	rm -f change_addr Th_tiff_timed
+	rm -f change_addr Servo_360_DXL
 	rm -f examples/*.o
-	rm -f examples/lib/*.o
 	rm -f functions/*.o
 	rm -f *.o
 	rm -f *.so
